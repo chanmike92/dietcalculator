@@ -1,15 +1,24 @@
 const path = require('path');
-var webpack = require("webpack");
 
 module.exports = {
-  context: __dirname,
-  entry: "./lib/app.js",
+  entry: './index.js',
   output: {
-    path: __dirname + "/lib/",
-    publicPath: "/lib/",
-    filename: "bundle.js",
-    devtoolModuleFilenameTemplate: '[resourcePath]',
-    devtoolFallbackModuleFilenameTemplate: '[resourcePath]?[hash]'
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist')
   },
-  devtool: 'source-maps'
+  resolve: {
+    extensions: ['.js', '.jsx', '*']
+  },
+  module: {
+  rules: [
+  {
+    test: /\.jsx?$/,
+    exclude: /(node_modules|bower_components)/,
+    loader: 'babel-loader',
+    query: {
+      presets: ['env', 'react']
+    }
+  },
+  ]
+  }
 };

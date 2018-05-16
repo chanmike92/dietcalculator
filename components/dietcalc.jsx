@@ -1,13 +1,15 @@
 import React from 'react';
 
-export default class DietCalculator extends React.Component {
+class DietCalculator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       height: 0,
       weight: 0,
       age: 0,
-      gender: "",
+      gender: "M",
+      weightval: "lbs",
+      heightval: "inches",
       activity: 0,
     };
   }
@@ -52,6 +54,12 @@ export default class DietCalculator extends React.Component {
           gender: "F"
         });
         break;
+
+        case "F":
+        this.setState({
+          gender: "M"
+        });
+        break;
       }
     };
   }
@@ -63,23 +71,22 @@ export default class DietCalculator extends React.Component {
   render() {
 
     return (
-      <div className='server-form-container'>
-        <form onSubmit={this.handleSubmit} className="server-form">
-          <form class="dietcalc">
+
+          <form className="dietcalc">
             <label>Height
-              <input type="text" name="height"></input>
-              <input type="text" onClick={ this.handleSwitch(this.state.heightval) }>{ this.state.heightval }</input>
+              <input type="number" name="height" value={ this.state.height } onChange={ this.handleInput("height")}></input>
+              <input type="button" onClick={ this.handleSwitch(this.state.heightval) } value={ this.state.heightval }></input>
             </label>
             <label>Weight
-            <input type="text" name="weight">{ this.state.height }</input>
-            <input type="text" onClick={ this.handleSwitch(this.state.heightval) } value={this.state.weightval}></input>
+            <input type="number" name="weight" value={ this.state.weight } onChange={ this.handleInput("weight")}></input>
+            <input type="button" onClick={ this.handleSwitch(this.state.weightval) } value={ this.state.weightval }></input>
             </label>
             <label>Age
-            <input type="text" name="age">{ this.state.age }</input>
+            <input type="number" name="age" value={ this.state.age } onChange={ this.handleInput("age")}></input>
             years
             </label>
             <label>Gender
-              <input type="text" onClick={ this.handleSwitch(this.state.gender) } value={ this.state.gender }></input>
+              <input type="button" onClick={ this.handleSwitch(this.state.gender) } value={ this.state.gender }></input>
             </label>
             <label>Activity Level
             <input type="text" name="activity"></input>
@@ -87,8 +94,9 @@ export default class DietCalculator extends React.Component {
 
             <button type="submit" name="button">Calculate</button>
           </form>
-        </form>
-      </div>
+
     );
   }
 }
+
+export default DietCalculator;
