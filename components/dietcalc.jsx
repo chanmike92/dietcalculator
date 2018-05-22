@@ -1,4 +1,5 @@
 import React from 'react';
+import Calculator from './calculator';
 
 class DietCalculator extends React.Component {
   constructor(props) {
@@ -11,7 +12,11 @@ class DietCalculator extends React.Component {
       weightval: "lbs",
       heightval: "inches",
       activity: 0,
+      showCalc: false,
     };
+
+    this.handleSwitch = this.handleSwitch.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleInput(input) {
@@ -60,18 +65,33 @@ class DietCalculator extends React.Component {
           gender: "M"
         });
         break;
+
       }
     };
   }
 
-  handleSubmit(e) {
-    e.preventDefault();
+  handleSubmit() {
+
+    this.setState({
+      showCalc: true
+    });
+
+
   }
 
   render() {
 
+    const calc = this.state.showCalc ? <Calculator height={ this.state.height }
+          weight={ this.state.weight }
+          age={ this.state.age }
+          gender={ this.state.gender }
+          weightval={ this.state.weightval }
+          heightval={ this.state.heightval }
+          activity={ this.state.activity }/>
+        :
+        "";
     return (
-
+        <div>
           <form className="dietcalc">
             <label>Height
               <input type="number" name="height" value={ this.state.height } onChange={ this.handleInput("height")}></input>
@@ -91,9 +111,38 @@ class DietCalculator extends React.Component {
             <label>Activity Level
             <input type="text" name="activity"></input>
             </label>
-
-            <button type="submit" name="button">Calculate</button>
           </form>
+          <div class='special-conditions'>
+            <div class="activity">
+              <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+              <div id="myDropdown" class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+              </div>
+            </div>
+            <div class="weight-trend">
+              <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+              <div id="myDropdown" class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+              </div>
+            </div>
+            <div class="conditions">
+              <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+              <div id="myDropdown" class="dropdown-content">
+                <a href="#">Link 1</a>
+                <a href="#">Link 2</a>
+                <a href="#">Link 3</a>
+              </div>
+            </div>
+          </div>
+            <button onClick={ this.handleSubmit } name="button">Calculate</button>
+            { calc }
+
+
+        </div>
 
     );
   }
