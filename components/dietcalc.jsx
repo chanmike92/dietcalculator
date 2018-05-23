@@ -5,13 +5,13 @@ class DietCalculator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      height: 0,
-      weight: 0,
-      age: 0,
+      height: "",
+      weight: "",
+      age: "",
       gender: "M",
       weightval: "lbs",
       heightval: "inches",
-      activity: 0,
+      activity: "",
       showCalc: false,
     };
 
@@ -19,38 +19,80 @@ class DietCalculator extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  validKeys(e) {
+    const valid = {1: true, 2: true, 3: true, 4: true, 5: true,
+      6: true, 7: true, 8: true, 9: true, 0: true, ".": true};
+    if (valid[e.key]) {
+
+    } else {
+
+      e.preventDefault();
+    }
+  }
+
   handleInput(input) {
     return (e) => {
-      this.setState({
-        [input]: e.currentTarget.value
-      });
-    };
-  }
+      if (e.currentTarget.value === "") {
+
+        this.setState({
+          [input]: ""
+        });
+      } else {
+      // if (this.validKeys(e.keyCode)) {
+      const inputVal = parseFloat(e.currentTarget.value).toFixed(2);
+      console.log(inputVal);
+      switch (input) {
+
+        case "age":
+        // if (e.keyCode !== 46) {
+        this.setState({
+          // [input]: Math.round(Number(String(this.state[`${input}`]).concat(e.key)))
+          [input]: Math.round(inputVal)
+          });
+        break;
+        default:
+        this.setState({
+          [input]: Math.round(inputVal * 100) / 100
+          });
+        }
+        }
+      };
+    }
+
+
+
+
+
 
   handleSwitch(input) {
     return (e) => {
+
       switch (input) {
         case "inches":
         this.setState({
-          heightval: "cm"
+          heightval: "cm",
+          height: Math.round(this.state.height * 2.54 * 100) / 100
         });
         break;
-
+//1 kg = 2.204 lbs || 1 lb = 0.4536 kg
         case "cm":
         this.setState({
-          heightval: "inches"
+          heightval: "inches",
+          height: Math.round(this.state.height * 0.3937 * 100) / 100,
         });
         break;
 
         case "lbs":
         this.setState({
-          weightval: "kg"
+          weightval: "kg",
+          weight: Math.round(this.state.weight * 0.4536 * 100) / 100
         });
         break;
 
         case "kg":
         this.setState({
-          weightval: "lbs"
+          weightval: "lbs",
+          weight: Math.round(this.state.weight * 2.204 * 100) / 100
         });
         break;
 
@@ -75,14 +117,15 @@ class DietCalculator extends React.Component {
     this.setState({
       showCalc: true
     });
-
-
   }
 
   render() {
 
-    const calc = this.state.showCalc ? <Calculator height={ this.state.height }
-          weight={ this.state.weight }
+    const height = this.state.heightval === 'inches' ?  Math.round(this.state.height * 100) / 100 : Math.round(this.state.height * 0.3937 * 100) / 100
+    const weight = this.state.weightval === 'lbs' ? Math.round(this.state.weight * 100) / 100 : Math.round(this.state.weight * 2.204 * 100) / 100
+
+    const calc = this.state.showCalc ? <Calculator height={ height }
+          weight={ weight }
           age={ this.state.age }
           gender={ this.state.gender }
           weightval={ this.state.weightval }
@@ -91,18 +134,18 @@ class DietCalculator extends React.Component {
         :
         "";
     return (
-        <div>
+        <div className='app'>
           <form className="dietcalc">
             <label>Height
-              <input type="number" name="height" value={ this.state.height } onChange={ this.handleInput("height")}></input>
+              <input type="number" name="height" value={ this.state.height } placeholder={ 0 } onChange={ this.handleInput("height") } onKeyPress={ (e) => this.validKeys(e) }></input>
               <input type="button" onClick={ this.handleSwitch(this.state.heightval) } value={ this.state.heightval }></input>
             </label>
             <label>Weight
-            <input type="number" name="weight" value={ this.state.weight } onChange={ this.handleInput("weight")}></input>
+            <input type="number" name="weight" value={ this.state.weight } placeholder={ 0 } onChange={ this.handleInput("weight") } onKeyPress={ (e) => this.validKeys(e) }></input>
             <input type="button" onClick={ this.handleSwitch(this.state.weightval) } value={ this.state.weightval }></input>
             </label>
             <label>Age
-            <input type="number" name="age" value={ this.state.age } onChange={ this.handleInput("age")}></input>
+            <input type="number" name="age" value={ this.state.age } placeholder={ 0 } onChange={ this.handleInput("age")} onKeyPress={ (e) => this.validKeys(e) }></input>
             years
             </label>
             <label>Gender
@@ -111,34 +154,10 @@ class DietCalculator extends React.Component {
             <label>Activity Level
             <input type="text" name="activity"></input>
             </label>
-          </form>
-          <div class='special-conditions'>
-            <div class="activity">
-              <button onclick="myFunction()" class="dropbtn">Dropdown</button>
-              <div id="myDropdown" class="dropdown-content">
-                <a href="#">Link 1</a>
-                <a href="#">Link 2</a>
-                <a href="#">Link 3</a>
-              </div>
-            </div>
-            <div class="weight-trend">
-              <button onclick="myFunction()" class="dropbtn">Dropdown</button>
-              <div id="myDropdown" class="dropdown-content">
-                <a href="#">Link 1</a>
-                <a href="#">Link 2</a>
-                <a href="#">Link 3</a>
-              </div>
-            </div>
-            <div class="conditions">
-              <button onclick="myFunction()" class="dropbtn">Dropdown</button>
-              <div id="myDropdown" class="dropdown-content">
-                <a href="#">Link 1</a>
-                <a href="#">Link 2</a>
-                <a href="#">Link 3</a>
-              </div>
-            </div>
-          </div>
             <button onClick={ this.handleSubmit } name="button">Calculate</button>
+          </form>
+
+
             { calc }
 
 
@@ -147,5 +166,32 @@ class DietCalculator extends React.Component {
     );
   }
 }
+
+// <div class='special-conditions'>
+//   <div class="activity">
+//     <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+//     <div id="myDropdown" class="dropdown-content">
+//       <a href="#">Link 1</a>
+//       <a href="#">Link 2</a>
+//       <a href="#">Link 3</a>
+//     </div>
+//   </div>
+//   <div class="weight-trend">
+//     <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+//     <div id="myDropdown" class="dropdown-content">
+//       <a href="#">Link 1</a>
+//       <a href="#">Link 2</a>
+//       <a href="#">Link 3</a>
+//     </div>
+//   </div>
+//   <div class="conditions">
+//     <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+//     <div id="myDropdown" class="dropdown-content">
+//       <a href="#">Link 1</a>
+//       <a href="#">Link 2</a>
+//       <a href="#">Link 3</a>
+//     </div>
+//   </div>
+// </div>
 
 export default DietCalculator;
