@@ -1,5 +1,6 @@
 import React from 'react';
-import Calculator from './calculator';
+import CaloricNeed from './caloric_need';
+import { convertInchesToCm, convertCmToInches, convertPoundsToKg, convertKgToPounds } from './util/calculator';
 
 class DietCalculator extends React.Component {
   constructor(props) {
@@ -12,20 +13,17 @@ class DietCalculator extends React.Component {
       weightval: "lbs",
       heightval: "inches",
       activity: "",
-      showCalc: false,
+      page: "calculator",
     };
 
     this.handleSwitch = this.handleSwitch.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleTab = this.handleTab.bind(this);
   }
 
   validKeys(e) {
     const valid = {1: true, 2: true, 3: true, 4: true, 5: true,
       6: true, 7: true, 8: true, 9: true, 0: true, ".": true};
-    if (valid[e.key]) {
-
-    } else {
-
+    if (!valid[e.key]) {
       e.preventDefault();
     }
   }
@@ -40,29 +38,20 @@ class DietCalculator extends React.Component {
       } else {
       // if (this.validKeys(e.keyCode)) {
       const inputVal = parseFloat(e.currentTarget.value).toFixed(2);
-      console.log(inputVal);
       switch (input) {
-
         case "age":
-        // if (e.keyCode !== 46) {
         this.setState({
-          // [input]: Math.round(Number(String(this.state[`${input}`]).concat(e.key)))
           [input]: Math.round(inputVal)
           });
         break;
         default:
         this.setState({
-          [input]: Math.round(inputVal * 100) / 100
+          [input]: Math.round(inputVal * 100) / 100,
           });
         }
         }
       };
     }
-
-
-
-
-
 
   handleSwitch(input) {
     return (e) => {
@@ -71,28 +60,27 @@ class DietCalculator extends React.Component {
         case "inches":
         this.setState({
           heightval: "cm",
-          height: Math.round(this.state.height * 2.54 * 100) / 100
+          height: convertInchesToCm(this.state.height)
         });
         break;
-//1 kg = 2.204 lbs || 1 lb = 0.4536 kg
         case "cm":
         this.setState({
           heightval: "inches",
-          height: Math.round(this.state.height * 0.3937 * 100) / 100,
+          height: convertCmToInches(this.state.height)
         });
         break;
 
         case "lbs":
         this.setState({
           weightval: "kg",
-          weight: Math.round(this.state.weight * 0.4536 * 100) / 100
+          weight: convertPoundsToKg(this.state.weight)
         });
         break;
 
         case "kg":
         this.setState({
           weightval: "lbs",
-          weight: Math.round(this.state.weight * 2.204 * 100) / 100
+          weight: convertKgToPounds(this.state.weight)
         });
         break;
 
@@ -112,40 +100,70 @@ class DietCalculator extends React.Component {
     };
   }
 
-  handleSubmit() {
-
-    this.setState({
-      showCalc: true
-    });
+  handleTab(input) {
+    return (e) => {
+      this.setState({
+        page: input
+      });
+    };
   }
 
   render() {
 
-    const height = this.state.heightval === 'inches' ?  Math.round(this.state.height * 100) / 100 : Math.round(this.state.height * 0.3937 * 100) / 100
-    const weight = this.state.weightval === 'lbs' ? Math.round(this.state.weight * 100) / 100 : Math.round(this.state.weight * 2.204 * 100) / 100
+    const height = this.state.heightval === 'inches' ?  this.state.height : convertCmToInches(this.state.height);
+    const weight = this.state.weightval === 'lbs' ? this.state.weight : convertKgToPounds(this.state.weight);
+    let renderPage;
 
-    const calc = this.state.showCalc ? <Calculator height={ height }
+    switch (this.state.page) {
+      case ("caloric") :
+        renderPage = <CaloricNeed height={ height }
           weight={ weight }
           age={ this.state.age }
           gender={ this.state.gender }
           weightval={ this.state.weightval }
           heightval={ this.state.heightval }
-          activity={ this.state.activity }/>
-        :
-        "";
-    return (
-        <div className='app'>
+          activity={ this.state.activity }/>;
+        break;
+      case ("requirement") :
+        renderPage = <CaloricNeed height={ height }
+          weight={ weight }
+          age={ this.state.age }
+          gender={ this.state.gender }
+          weightval={ this.state.weightval }
+          heightval={ this.state.heightval }
+          activity={ this.state.activity }/>;
+        break;
+      case ("trend") :
+        renderPage = <CaloricNeed height={ height }
+          weight={ weight }
+          age={ this.state.age }
+          gender={ this.state.gender }
+          weightval={ this.state.weightval }
+          heightval={ this.state.heightval }
+          activity={ this.state.activity }/>;
+        break;
+      case ("ibw") :
+        renderPage = <CaloricNeed height={ height }
+          weight={ weight }
+          age={ this.state.age }
+          gender={ this.state.gender }
+          weightval={ this.state.weightval }
+          heightval={ this.state.heightval }
+          activity={ this.state.activity }/>;
+        break;
+      default: {
+          renderPage =
           <form className="dietcalc">
             <label>Height
-              <input type="number" name="height" value={ this.state.height } placeholder={ 0 } onChange={ this.handleInput("height") } onKeyPress={ (e) => this.validKeys(e) }></input>
+              <input type="text" name="height" value={ this.state.height } placeholder={ 0 } onChange={ this.handleInput("height") } onKeyPress={ (e) => this.validKeys(e) }></input>
               <input type="button" onClick={ this.handleSwitch(this.state.heightval) } value={ this.state.heightval }></input>
             </label>
             <label>Weight
-            <input type="number" name="weight" value={ this.state.weight } placeholder={ 0 } onChange={ this.handleInput("weight") } onKeyPress={ (e) => this.validKeys(e) }></input>
+            <input type="text" name="weight" value={ this.state.weight } placeholder={ 0 } onChange={ this.handleInput("weight") } onKeyPress={ (e) => this.validKeys(e) }></input>
             <input type="button" onClick={ this.handleSwitch(this.state.weightval) } value={ this.state.weightval }></input>
             </label>
             <label>Age
-            <input type="number" name="age" value={ this.state.age } placeholder={ 0 } onChange={ this.handleInput("age")} onKeyPress={ (e) => this.validKeys(e) }></input>
+            <input type="text" name="age" value={ this.state.age } placeholder={ 0 } onChange={ this.handleInput("age")} onKeyPress={ (e) => this.validKeys(e) }></input>
             years
             </label>
             <label>Gender
@@ -154,18 +172,41 @@ class DietCalculator extends React.Component {
             <label>Activity Level
             <input type="text" name="activity"></input>
             </label>
-            <button onClick={ this.handleSubmit } name="button">Calculate</button>
-          </form>
+          </form>;
+        }
+      }
 
 
-            { calc }
 
 
+    return (
+      <div>
+        <div>
+          <button onClick={ this.handleTab("calculator") }>CaloricNeed</button>
+          <button onClick={ this.handleTab("caloric") }>Estimated Caloric Needs</button>
+          <button onClick={ this.handleTab("requirement") }>Protein/Fluid Requirements</button>
+          <button onClick={ this.handleTab("trend") }>Weight Trend</button>
+          <button onClick={ this.handleTab("ibw") }>IBW</button>
         </div>
+        { renderPage }
+      </div>
+
 
     );
   }
 }
+
+
+// let component;
+//
+// switch (this.state.page) {
+//   case("input"):
+//     component = <DietCalculator />;
+//   break;
+//   default: {
+//     component = <DietCalculator />;
+//   }
+// }
 
 // <div class='special-conditions'>
 //   <div class="activity">
