@@ -15,10 +15,10 @@ const CaloricNeed = ({weight, height, activity, age}) => {
     const BMI = calculateBMI(height, weight);
     const REE = calculateREE(kg, height, age, activity);
     const totalCal = calculateCalories(REE, activity);
-    
+
       if (BMI && age && activity) {
         return (
-      <div>
+      <div className="caloric page">
         <div>
           ACTIVITY : { activity }
           <div>BMI</div>
@@ -54,7 +54,7 @@ const CaloricNeed = ({weight, height, activity, age}) => {
       );
     } else {
       return (
-        <div>Not Enough Information</div>
+        <div className="caloric page">Not Enough Information</div>
       );
     }
 };

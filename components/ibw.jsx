@@ -1,10 +1,14 @@
 import React from 'react';
 import { calculateIBW } from './util/calculator';
 
-const IBW = (props) => {
+class IBW extends React.component {
 
   render() {
-    
+    return (
+      <div className="ibw page">
+
+      </div>
+    );
   }
 };
 

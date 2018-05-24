@@ -1,7 +1,11 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
 .dietcalc {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   width: 50%;
 }
 
@@ -11,10 +15,10 @@
 }
 
 .dropbtn {
-    width: 150px;
+    width: 200px;
     background-color: #3498DB;
     color: white;
-    padding: 16px;
+    padding: 8px;
     font-size: 16px;
     border: none;
     cursor: pointer;
@@ -25,34 +29,39 @@
     background-color: #2980B9;
 }
 
-.dropdown {
-    position: relative;
-    display: inline-block;
+.show {
+  display:block;
 }
 
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    overflow: auto;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+.navbar {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
 }
 
-.dropdown-content button {
-    color: black;
-    padding: 12px 16px;
-    border: 0;
-    width: 100%;
-    text-decoration: none;
-    display: block;
+.navbar-button {
+  width: 100%;
+  border: 1px solid lightgrey;
+  padding: 10px;
 }
 
-.dropdown a:hover {background-color: #ddd}
+.dietapp {
+  height: 100%;
+  width: 100%;
+}
 
-.show {display:block;}
+.page {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
 
-.special-conditions {
-  z-index: 9999
+.App {
+  height: 100%;
+  width: 100%;
+}
+
+#root, body {
+  height: 100%;
+  width: 100%;
 }
