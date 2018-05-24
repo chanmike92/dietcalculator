@@ -15,11 +15,12 @@ const CaloricNeed = ({weight, height, activity, age}) => {
     const BMI = calculateBMI(height, weight);
     const REE = calculateREE(kg, height, age, activity);
     const totalCal = calculateCalories(REE, activity);
-
-      if (BMI) {
+    
+      if (BMI && age && activity) {
         return (
       <div>
         <div>
+          ACTIVITY : { activity }
           <div>BMI</div>
           <div>{ BMI }</div>
         </div>

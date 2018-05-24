@@ -6,19 +6,30 @@ class DietCalculator extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      activitymenu: false,
+      conditionsmenu: false,
       height: "",
       weight: "",
       age: "",
       gender: "M",
       weightval: "lbs",
       heightval: "inches",
-      activity: "",
+      activity: "Activity Level",
+      conditions: "Conditions",
       page: "calculator",
     };
 
     this.handleSwitch = this.handleSwitch.bind(this);
     this.handleTab = this.handleTab.bind(this);
+    this.handleDropdown = this.handleDropdown.bind(this);
+    this.handleClose = this.handleClose.bind(this);
   }
+
+  componentDidMount() {
+    // document.addEventListener("click", this.handleClose);
+  }
+
+
 
   validKeys(e) {
     const valid = {1: true, 2: true, 3: true, 4: true, 5: true,
@@ -54,8 +65,10 @@ class DietCalculator extends React.Component {
     }
 
   handleSwitch(input) {
+
     return (e) => {
 
+      e.preventDefault();
       switch (input) {
         case "inches":
         this.setState({
@@ -63,6 +76,7 @@ class DietCalculator extends React.Component {
           height: convertInchesToCm(this.state.height)
         });
         break;
+
         case "cm":
         this.setState({
           heightval: "inches",
@@ -96,6 +110,12 @@ class DietCalculator extends React.Component {
         });
         break;
 
+        case "activity":
+        this.setState({
+          activity: e.currentTarget.value
+        });
+        break;
+
       }
     };
   }
@@ -108,10 +128,58 @@ class DietCalculator extends React.Component {
     };
   }
 
+  handleDropdown(input) {
+
+    return (e) => {
+      e.preventDefault();
+      switch (input) {
+        case "activity":
+        this.setState({
+          activitymenu: true,
+          conditionsmenu: false
+        }, () => {document.addEventListener('click', this.handleClose);});
+        break;
+        case "conditions":
+        this.setState({
+          activitymenu: false,
+          conditionsmenu: true
+        }, () => {document.addEventListener('click', this.handleClose);});
+        break;
+        default:
+        this.setState({
+          activitymenu: false,
+          conditionsmenu: false
+        });
+      }
+    };
+  }
+
+  handleClose() {
+    if (!this.dropdownMenu.contains(event.target)) {
+      this.setState({
+        activitymenu: false,
+        conditionsmenu: false
+      }, () => {document.removeEventListener('click', this.handleClose);});
+    }
+  }
+
   render() {
 
     const height = this.state.heightval === 'inches' ?  this.state.height : convertCmToInches(this.state.height);
     const weight = this.state.weightval === 'lbs' ? this.state.weight : convertKgToPounds(this.state.weight);
+    const activityMenu = this.state.activitymenu ?
+    <div id="myDropdown" className="dropdown-content show">
+      <button onClick={ this.handleSwitch("activity")} value={ 1 }>A 1</button>
+      <button onClick={ this.handleSwitch("activity")} value={ 1.2 }>A 2</button>
+      <button onClick={ this.handleSwitch("activity")} value={ 1.4 }>A 3</button>
+    </div> : "";
+
+    const conditionsMenu = this.state.conditionsmenu ?
+    <div id="myDropdown" className="dropdown-content show">
+      <div>C 1</div>
+      <div>C 2</div>
+      <div>C 3</div>
+    </div> : "";
     let renderPage;
 
     switch (this.state.page) {
@@ -153,7 +221,7 @@ class DietCalculator extends React.Component {
         break;
       default: {
           renderPage =
-          <form className="dietcalc">
+          <div className="dietcalc">
             <label>Height
               <input type="text" name="height" value={ this.state.height } placeholder={ 0 } onChange={ this.handleInput("height") } onKeyPress={ (e) => this.validKeys(e) }></input>
               <input type="button" onClick={ this.handleSwitch(this.state.heightval) } value={ this.state.heightval }></input>
@@ -169,10 +237,24 @@ class DietCalculator extends React.Component {
             <label>Gender
               <input type="button" onClick={ this.handleSwitch(this.state.gender) } value={ this.state.gender }></input>
             </label>
-            <label>Activity Level
-            <input type="text" name="activity"></input>
-            </label>
-          </form>;
+            <label>Activity Level</label>
+              <div className='special-conditions'>
+                <div className="activity">
+                  Activity
+                  <input type="button" onClick={ this.handleDropdown("activity") } className="dropbtn" ref={(element) => {
+                  this.dropdownMenu = element;
+                }} value={ this.state.activity }></input>
+                  { activityMenu }
+                </div>
+                <div className="conditions">
+                  Conditions
+                  <input type="button" onClick={ this.handleDropdown("conditions") } className="dropbtn" ref={(element) => {
+                  this.dropdownMenu = element;
+                }} value={ this.state.conditions }></input>
+                  { conditionsMenu }
+                </div>
+              </div>
+          </div>;
         }
       }
 
@@ -195,44 +277,5 @@ class DietCalculator extends React.Component {
     );
   }
 }
-
-
-// let component;
-//
-// switch (this.state.page) {
-//   case("input"):
-//     component = <DietCalculator />;
-//   break;
-//   default: {
-//     component = <DietCalculator />;
-//   }
-// }
-
-// <div class='special-conditions'>
-//   <div class="activity">
-//     <button onclick="myFunction()" class="dropbtn">Dropdown</button>
-//     <div id="myDropdown" class="dropdown-content">
-//       <a href="#">Link 1</a>
-//       <a href="#">Link 2</a>
-//       <a href="#">Link 3</a>
-//     </div>
-//   </div>
-//   <div class="weight-trend">
-//     <button onclick="myFunction()" class="dropbtn">Dropdown</button>
-//     <div id="myDropdown" class="dropdown-content">
-//       <a href="#">Link 1</a>
-//       <a href="#">Link 2</a>
-//       <a href="#">Link 3</a>
-//     </div>
-//   </div>
-//   <div class="conditions">
-//     <button onclick="myFunction()" class="dropbtn">Dropdown</button>
-//     <div id="myDropdown" class="dropdown-content">
-//       <a href="#">Link 1</a>
-//       <a href="#">Link 2</a>
-//       <a href="#">Link 3</a>
-//     </div>
-//   </div>
-// </div>
 
 export default DietCalculator;

@@ -3,9 +3,9 @@ import { calculateIBW } from './util/calculator';
 
 const IBW = (props) => {
 
-  return (
-
-  )
+  render() {
+    
+  }
 };
 
 export default IBW;

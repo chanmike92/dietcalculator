@@ -1,4 +1,3 @@
-
 export const convertInchesToCm = (inches) => {
   return (Math.round(inches * 2.54 * 100) / 100);
 };
