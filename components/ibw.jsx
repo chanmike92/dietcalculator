@@ -6,7 +6,8 @@ class IBW extends React.Component {
     super(props);
     this.state = {
       aka: 0,
-      bka: 0
+      bka: 0,
+      foot: 0,
     };
     this.handleSelect.bind(this);
   }
@@ -14,6 +15,16 @@ class IBW extends React.Component {
   handleSelect(input) {
     return (e) => {
       e.preventDefault();
+      // switch(input) {
+      //   case "aka":
+      //   break;
+      //
+      //   case "bka":
+      //   break
+      //
+      //   case "foot":
+      //   break
+      // }
       this.setState({
         [input]: e.currentTarget.value
       });
@@ -25,8 +36,7 @@ class IBW extends React.Component {
     const lowEnd = Math.floor((IBWvalue * 0.9) * 100)/100;
     const highEnd = Math.floor((IBWvalue * 1.1) * 100)/100;
     const IBWPercentage = Math.floor((IBWvalue / this.props.weight) * 100)/100;
-    debugger
-    if (this.props.height !== 0 && this.props.weight !== 0) {
+    // this.props.weight/(1-(( 0.015* this.state.foot)+( 0.059* this.state.bka )+( 0.084* this.state.aka)))
       return (
         <div className="ibw page">
 
@@ -68,9 +78,7 @@ class IBW extends React.Component {
           </div>
         </div>
       );
-      } else {
-        return (<div>Not enough info</div>);
-      }
+    }
   }
 }
 
