@@ -11,7 +11,7 @@ class Requirement extends React.Component {
 
   render() {
     return (
-      <div className="keon">Keon is a bitch</div>
+      <div className="keon">Test</div>
     );
   }
 }
