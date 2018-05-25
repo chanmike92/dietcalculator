@@ -1,5 +1,8 @@
 import React from 'react';
 import CaloricNeed from './caloric_need';
+import IBW from './ibw';
+import Requirement from './requirements';
+// import WeightTrend from './weight_trend';
 import { convertInchesToCm, convertCmToInches, convertPoundsToKg, convertKgToPounds } from './util/calculator';
 
 class DietCalculator extends React.Component {
@@ -9,7 +12,7 @@ class DietCalculator extends React.Component {
       height: "",
       weight: "",
       age: "",
-      gender: "M",
+      gender: "Male",
       weightval: "lbs",
       heightval: "inches",
       activity: "",
@@ -20,18 +23,16 @@ class DietCalculator extends React.Component {
     this.handleSwitch = this.handleSwitch.bind(this);
     this.handleTab = this.handleTab.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+    this.currentPage = this.currentPage.bind(this);
   }
-
-  componentDidMount() {
-    // document.addEventListener("click", this.handleClose);
-  }
-
 
 
   validKeys(e) {
     const valid = {1: true, 2: true, 3: true, 4: true, 5: true,
       6: true, 7: true, 8: true, 9: true, 0: true, ".": true};
-    if (!valid[e.key]) {
+      // debugger
+    if (valid[e.key]) {
+    } else {
       e.preventDefault();
     }
   }
@@ -45,17 +46,21 @@ class DietCalculator extends React.Component {
         });
       } else {
       // if (this.validKeys(e.keyCode)) {
-      const inputVal = parseFloat(e.currentTarget.value).toFixed(2);
+      const inputVal = parseFloat(e.currentTarget.value) ? Math.round(parseFloat(e.currentTarget.value).toFixed(2) * 100) / 100 : e.currentTarget.value;
       switch (input) {
         case "age":
+        if (inputVal < 200) {
         this.setState({
           [input]: Math.round(inputVal)
           });
+        }
         break;
         default:
-        this.setState({
-          [input]: Math.round(inputVal * 100) / 100,
-          });
+        if (inputVal === "." || inputVal < 600) {
+          this.setState({
+            [input]: inputVal
+            });
+          }
         }
         }
       };
@@ -94,15 +99,15 @@ class DietCalculator extends React.Component {
         });
         break;
 
-        case "M":
+        case "Male":
         this.setState({
-          gender: "F"
+          gender: "Female"
         });
         break;
 
-        case "F":
+        case "Female":
         this.setState({
-          gender: "M"
+          gender: "Male"
         });
         break;
       }
@@ -122,19 +127,15 @@ class DietCalculator extends React.Component {
 
     return (e) => {
       e.preventDefault();
-      switch (input) {
-        case "activity":
-        this.setState({
-          activity: e.currentTarget.value
-        });
-        break;
-        case "conditions":
-        this.setState({
-          activity: e.currentTarget.value
-        });
-        break;
-      }
+      this.setState({
+        [input]: e.currentTarget.value
+      });
     };
+  }caloric_need
+
+
+  currentPage(input) {
+    return this.state.page === `${input}` ? "navbar-button selected" : "navbar-button";
   }
 
 
@@ -156,7 +157,7 @@ class DietCalculator extends React.Component {
           activity={ this.state.activity }/>;
         break;
       case ("requirement") :
-        renderPage = <CaloricNeed height={ height }
+        renderPage = <Requirement height={ height }
           weight={ weight }
           age={ this.state.age }
           gender={ this.state.gender }
@@ -174,7 +175,7 @@ class DietCalculator extends React.Component {
           activity={ this.state.activity }/>;
         break;
       case ("ibw") :
-        renderPage = <CaloricNeed height={ height }
+        renderPage = <IBW height={ height }
           weight={ weight }
           age={ this.state.age }
           gender={ this.state.gender }
@@ -185,42 +186,34 @@ class DietCalculator extends React.Component {
       default: {
           renderPage =
           <div className="dietcalc page">
-            <label>Height
-              <input type="text" name="height" value={ this.state.height } placeholder={ 0 } onChange={ this.handleInput("height") } onKeyPress={ (e) => this.validKeys(e) }></input>
-              <input type="button" onClick={ this.handleSwitch(this.state.heightval) } value={ this.state.heightval }></input>
-            </label>
-            <label>Weight
-            <input type="text" name="weight" value={ this.state.weight } placeholder={ 0 } onChange={ this.handleInput("weight") } onKeyPress={ (e) => this.validKeys(e) }></input>
-            <input type="button" onClick={ this.handleSwitch(this.state.weightval) } value={ this.state.weightval }></input>
-            </label>
-            <label>Age
-            <input type="text" name="age" value={ this.state.age } placeholder={ 0 } onChange={ this.handleInput("age")} onKeyPress={ (e) => this.validKeys(e) }></input>
-            years
-            </label>
-            <label>Gender
-              <input type="button" onClick={ this.handleSwitch(this.state.gender) } value={ this.state.gender }></input>
-            </label>
-            <label>Activity Level</label>
-              <div className='special-conditions'>
-                <div className="activity">
-                  Activity
-                  <select onChange={ this.handleSelect("activity") } className="dropbtn">
-                    <option value="" disabled selected>Select your option</option>
-                    <option value={ 1.4 }>Light Activity</option>
-                    <option value={ 1.3 }>Ambulatory/Out of Bed</option>
-                    <option value={ 1.2 }>Confined to Bed</option>
-                  </select>
-                </div>
-                <div className="conditions">
-                  Conditions
-                  <select onChange={ this.handleSelect("conditions") } className="dropbtn">
-                    <option value={ 1 }>C 1</option>
-                    <option value={ 1.2 }>C 2</option>
-                    <option value={ 1.4 }>C 3</option>
-                  </select>;
-                </div>
-              </div>
-          </div>;
+              <label className="input-name">Height</label>
+              <input className="input-field" maxLength="10" type="text" name="height" value={ this.state.height }  onChange={ this.handleInput("height") } onKeyPress={ (e) => this.validKeys(e) }></input>
+              <input className="change-unit" type="button" onClick={ this.handleSwitch(this.state.heightval) } value={ this.state.heightval }></input>
+              <label className="input-name">Weight</label>
+              <input className="input-field" maxLength="10" type="text" name="weight" value={ this.state.weight }  onChange={ this.handleInput("weight") } onKeyPress={ (e) => this.validKeys(e) }></input>
+              <input className="change-unit" type="button" onClick={ this.handleSwitch(this.state.weightval) } value={ this.state.weightval }></input>
+              <label className="input-name">Age</label>
+              <input className="input-field" maxLength="3" type="text" name="age" value={ this.state.age }  onChange={ this.handleInput("age")} onKeyPress={ (e) => this.validKeys(e) }></input>
+              <label className="static-unit">years</label>
+
+              <label className="input-name">Gender</label>
+              <input className="change-unit" type="button" onClick={ this.handleSwitch(this.state.gender) } value={ this.state.gender }></input>
+              <div className="input-name">Activity</div>
+                <select onChange={ this.handleSelect("activity") } defaultValue="Select Option" className="dropbtn">
+                  <option disabled>Select Option</option>
+                  <option value={ 1.4 }>Light Activity</option>
+                  <option value={ 1.3 }>Ambulatory/Out of Bed</option>
+                  <option value={ 1.2 }>Confined to Bed</option>
+                </select>
+              <div className="input-name">Conditions</div>
+                <select onChange={ this.handleSelect("conditions") } defaultValue="Select Option" className="dropbtn">
+                  <option className="test" disabled>Select Option</option>
+                  <option value={ 1 }>Normal</option>
+                  <option value={ 1 }>Pressure Ulcer</option>
+                  <option value={ 1.2 }>Infection</option>
+                  <option value={ 1.4 }>Dialysis</option>
+                </select>
+            </div>;
         }
       }
 
@@ -228,13 +221,15 @@ class DietCalculator extends React.Component {
     return (
       <div className="dietapp">
         <div className="navbar">
-          <button className="navbar-button" onClick={ this.handleTab("calculator") }>CaloricNeed</button>
-          <button className="navbar-button" onClick={ this.handleTab("caloric") }>Estimated Caloric Needs</button>
-          <button className="navbar-button" onClick={ this.handleTab("requirement") }>Protein/Fluid Requirements</button>
-          <button className="navbar-button" onClick={ this.handleTab("trend") }>Weight Trend</button>
-          <button className="navbar-button" onClick={ this.handleTab("ibw") }>IBW</button>
+          <button className={ this.currentPage("calculator") } onClick={ this.handleTab("calculator") }>Input</button>
+          <button className={ this.currentPage("caloric") } onClick={ this.handleTab("caloric") }>Estimated Caloric Needs</button>
+          <button className={ this.currentPage("requirement") } onClick={ this.handleTab("requirement") }>Protein/Fluid Requirements</button>
+          <button className={ this.currentPage("trend") } onClick={ this.handleTab("trend") }>Weight Trend</button>
+          <button className={ this.currentPage("ibw") } onClick={ this.handleTab("ibw") }>IBW</button>
         </div>
+        <div className="rendered">
         { renderPage }
+        </div>
       </div>
 
 

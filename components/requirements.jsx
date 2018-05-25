@@ -1,15 +1,19 @@
 import React from 'react';
 
-class Requirement extends React.component {
+class Requirement extends React.Component {
   constructor(props) {
-    super(props)
-    this.state = {
-
-    };
+    super(props);
+    // this.state = {
+    //
+    // };
   }
 
 
   render() {
-    <div>Requirement Component is rendering</div>
+    return (
+      <div className="keon">Keon is a bitch</div>
+    );
   }
 }
+
+export default Requirement;

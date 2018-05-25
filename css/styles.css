@@ -4,9 +4,74 @@ html {
 }
 
 .dietcalc {
+  height: 100%;
+  top: 10px;
+  display: grid;
+  grid-template-columns: 20% 10% 30% 10% 10% 10% 10%;
+  grid-template-rows: repeat(6, 50px) auto;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+.input-name {
+  grid-column-start: 2;
   display: flex;
-  flex-direction: column;
-  width: 50%;
+  justify-content: center;
+  /* text-align: center; */
+  align-items: center;
+  font-size: 16px;
+  /* font-family: 'Hind Siliguri', sans-serif; */
+  font-family: 'Muli', sans-serif;
+}
+
+.input-field {
+  grid-column-start: 3;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid lightgrey;
+  font-size: 20px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+    font-family: 'Muli', sans-serif;
+}
+
+.input-field:active, .input-field:focus {
+  border-bottom: 2px solid grey;
+}
+
+.input-field:hover {
+  cursor: pointer;
+}
+
+.keon {
+  font-size: 26px;
+}
+
+select option:checked {
+  background: lightgrey
+}
+
+.change-unit {
+  color: white;
+  outline: none;
+  border: none;
+  background-color: #3498DB;
+    font-family: 'Muli', sans-serif;
+}
+
+.change-unit:hover {
+  background-color: #2980B9;
+  cursor: pointer;
+}
+
+.static-unit {
+  text-align: center;
+  align-items: center;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  font-family: 'Muli', sans-serif;
 }
 
 .app {
@@ -15,7 +80,7 @@ html {
 }
 
 .dropbtn {
-    width: 200px;
+    width: 100%;
     background-color: #3498DB;
     color: white;
     padding: 8px;
@@ -23,20 +88,25 @@ html {
     border: none;
     cursor: pointer;
     z-index: 5;
+    -webkit-appearance: none;
 }
 
 .dropbtn:hover, .dropbtn:focus {
     background-color: #2980B9;
+    cursor: pointer;
 }
 
 .show {
   display:block;
 }
 
+
 .navbar {
+  height: 50px;
   width: 100%;
   display: flex;
   flex-direction: row;
+  margin-bottom: 10px;
 }
 
 .navbar-button {
@@ -64,4 +134,23 @@ html {
 #root, body {
   height: 100%;
   width: 100%;
+}
+
+.selected {
+  background-color: skyblue;
+}
+
+.rendered {
+  height: 100% - 50px;
+  width: 100%;
+  text-align: center;
+}
+
+.ibw {
+  height: 100%;
+  display: grid;
+  grid-template-columns: auto repeat(4, auto) auto;
+  grid-template-rows: repeat(8, 50px) auto;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
 }
