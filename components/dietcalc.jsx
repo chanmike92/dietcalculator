@@ -116,9 +116,11 @@ class DietCalculator extends React.Component {
 
   handleTab(input) {
     return (e) => {
-      this.setState({
-        page: input
-      });
+      if (this.state.height > 0 && this.state.weight > 0 && this.state.age > 0 && this.state.activity > 0 && this.state.conditions !== "") {
+        this.setState({
+          page: input
+        });
+      }
     };
   }
 
