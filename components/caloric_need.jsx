@@ -52,7 +52,6 @@ const CaloricNeed = ({weight, height, activity, age}) => {
         </div>
       </div>
       );
-    }
 };
 
 export default CaloricNeed;

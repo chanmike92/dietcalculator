@@ -79,7 +79,6 @@ class IBW extends React.Component {
         </div>
       );
     }
-  }
 }
 
 export default IBW;
