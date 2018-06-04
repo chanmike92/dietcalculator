@@ -5,15 +5,8 @@ html {
 
 .dietcalc {
   height: 100%;
-  display: grid;
-  grid-template-rows: auto auto;
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
-}
-
-.dietcalc-input {
-  height: 100%;
   width: 100%;
+  top: 10px;
   display: grid;
   grid-template-columns: 150px 300px 100px;
   grid-template-rows: repeat(6, 50px) auto;
@@ -192,7 +185,7 @@ select option:checked {
 .input-section {
   height: 100%;
   display: grid;
-  grid-template-rows: 50px auto;
+  grid-template-rows: 50 auto;
   grid-column-gap: 10px;
   grid-row-gap: 10px;
 
