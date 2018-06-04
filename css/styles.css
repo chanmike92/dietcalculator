@@ -5,16 +5,24 @@ html {
 
 .dietcalc {
   height: 100%;
+  width: 100%;
   top: 10px;
   display: grid;
-  grid-template-columns: 20% 150px auto 100px 20%;
+  grid-template-columns: 150px 300px 100px;
   grid-template-rows: repeat(6, 50px) auto;
   grid-column-gap: 10px;
   grid-row-gap: 10px;
 }
 
+.label-name {
+  align-items: center;
+  font-size: 16px;
+  /* font-family: 'Hind Siliguri', sans-serif; */
+  font-family: 'Muli', sans-serif;
+}
+
 .input-name {
-  grid-column-start: 2;
+  grid-column-start: 1;
   display: flex;
   justify-content: center;
   /* text-align: center; */
@@ -25,7 +33,7 @@ html {
 }
 
 .input-field {
-  grid-column-start: 3;
+  grid-column-start: 2;
   outline: none;
   border: none;
   border-bottom: 1px solid lightgrey;
@@ -124,6 +132,7 @@ select option:checked {
   height: 100%;
   width: 100%;
   text-align: center;
+    grid-column-start: 2;
 }
 
 .App {
@@ -144,6 +153,10 @@ select option:checked {
   height: 100% - 50px;
   width: 100%;
   text-align: center;
+  display: flex;
+  box-sizing: border-box;
+  padding: 20px;
+  /* justify-content: space-between; */
 }
 
 .ibw {
@@ -188,9 +201,55 @@ select option:checked {
 
 .caloric {
   height: 100%;
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(8, auto);
-  grid-template-rows: auto;
+  grid-template-rows: repeat(2, auto);
   grid-column-gap: 10px;
   grid-row-gap: 10px;
+}
+
+.caloric-stats {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(3, 50px);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+.caloric-stats-bottom {
+  display: grid;
+  grid-template-rows: 50px auto;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+
+
+.caloric-needs {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: 50px auto;
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+.caloric-needs-chart {
+
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(3, 50px);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+.low {
+  grid-column-start: 1
+}
+
+.high {
+  grid-column-start: 2
 }

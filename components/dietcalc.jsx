@@ -149,15 +149,6 @@ class DietCalculator extends React.Component {
     let renderPage;
 
     switch (this.state.page) {
-      case ("caloric") :
-        renderPage = <CaloricNeed height={ height }
-          weight={ weight }
-          age={ this.state.age }
-          gender={ this.state.gender }
-          weightval={ this.state.weightval }
-          heightval={ this.state.heightval }
-          activity={ this.state.activity }/>;
-        break;
       case ("requirement") :
         renderPage = <Requirement height={ height }
           weight={ weight }
@@ -186,8 +177,29 @@ class DietCalculator extends React.Component {
           activity={ this.state.activity }/>;
         break;
       default: {
-          renderPage =
-          <div className="dietcalc page">
+        renderPage = <CaloricNeed height={ height }
+          weight={ weight }
+          age={ this.state.age }
+          gender={ this.state.gender }
+          weightval={ this.state.weightval }
+          heightval={ this.state.heightval }
+          activity={ this.state.activity }/>;
+        break;
+
+        }
+      }
+
+
+    return (
+      <div className="dietapp">
+        <div className="navbar">
+          <button className={ this.currentPage("caloric") } onClick={ this.handleTab("caloric") }>Estimated Caloric Needs</button>
+          <button className={ this.currentPage("requirement") } onClick={ this.handleTab("requirement") }>Protein/Fluid Requirements</button>
+          <button className={ this.currentPage("trend") } onClick={ this.handleTab("trend") }>Weight Trend</button>
+          <button className={ this.currentPage("ibw") } onClick={ this.handleTab("ibw") }>IBW</button>
+        </div>
+        <div className="rendered">
+          <div className="dietcalc">
               <label className="input-name">Height</label>
               <input className="input-field" maxLength="10" type="text" name="height" value={ this.state.height }  onChange={ this.handleInput("height") } onKeyPress={ (e) => this.validKeys(e) }></input>
               <input className="change-unit" type="button" onClick={ this.handleSwitch(this.state.heightval) } value={ this.state.heightval }></input>
@@ -201,35 +213,21 @@ class DietCalculator extends React.Component {
               <label className="input-name">Gender</label>
               <input className="change-unit" type="button" onClick={ this.handleSwitch(this.state.gender) } value={ this.state.gender }></input>
               <div className="input-name">Activity</div>
-                <select onChange={ this.handleSelect("activity") } defaultValue="Select Option" className="dropbtn">
-                  <option disabled>Select Option</option>
-                  <option value={ 1.4 }>Light Activity</option>
-                  <option value={ 1.3 }>Ambulatory/Out of Bed</option>
-                  <option value={ 1.2 }>Confined to Bed</option>
-                </select>
+              <select onChange={ this.handleSelect("activity") } defaultValue="Select Option" className="dropbtn">
+                <option disabled>Select Option</option>
+                <option value={ 1.4 }>Light Activity</option>
+                <option value={ 1.3 }>Ambulatory/Out of Bed</option>
+                <option value={ 1.2 }>Confined to Bed</option>
+              </select>
               <div className="input-name">Conditions</div>
-                <select onChange={ this.handleSelect("conditions") } defaultValue="Select Option" className="dropbtn">
-                  <option className="test" disabled>Select Option</option>
-                  <option value={ 1 }>Normal</option>
-                  <option value={ 1 }>Pressure Ulcer</option>
-                  <option value={ 1.2 }>Infection</option>
-                  <option value={ 1.4 }>Dialysis</option>
-                </select>
-            </div>;
-        }
-      }
-
-
-    return (
-      <div className="dietapp">
-        <div className="navbar">
-          <button className={ this.currentPage("calculator") } onClick={ this.handleTab("calculator") }>Input</button>
-          <button className={ this.currentPage("caloric") } onClick={ this.handleTab("caloric") }>Estimated Caloric Needs</button>
-          <button className={ this.currentPage("requirement") } onClick={ this.handleTab("requirement") }>Protein/Fluid Requirements</button>
-          <button className={ this.currentPage("trend") } onClick={ this.handleTab("trend") }>Weight Trend</button>
-          <button className={ this.currentPage("ibw") } onClick={ this.handleTab("ibw") }>IBW</button>
-        </div>
-        <div className="rendered">
+              <select onChange={ this.handleSelect("conditions") } defaultValue="Select Option" className="dropbtn">
+                <option className="test" disabled>Select Option</option>
+                <option value={ 1 }>Normal</option>
+                <option value={ 1 }>Pressure Ulcer</option>
+                <option value={ 1.2 }>Infection</option>
+                <option value={ 1.4 }>Dialysis</option>
+              </select>
+            </div>
         { renderPage }
         </div>
       </div>
