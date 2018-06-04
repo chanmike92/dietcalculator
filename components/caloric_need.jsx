@@ -8,26 +8,29 @@ import { convertPoundsToKg, calculateREE, calculateCalories, calculateBMI } from
 //BMI = (weight(height * height))) * 703
 
 
-const CaloricNeed = ({weight, height, activity, age, conditions}) => {
+const CaloricNeed = ({weight, height, activity, age, conditions, adjBMI}) => {
 
 
     const kg = convertPoundsToKg(weight);
     const BMI = calculateBMI(height, weight);
     const REE = calculateREE(kg, height, age, activity);
     const totalCal = calculateCalories(REE, activity);
-
- if (BMI && activity && conditions) {
+    let adj = adjBMI ? adjBMI : 0;
     return (
       <div className="caloric">
         <div className="caloric-stats">
-          <div className="label-name">ACTIVITY</div>
-          <div>{ activity }</div>
-
           <div className="label-name">BMI</div>
-          <div>{ BMI }</div>
+          <div className="label-name">{ BMI }</div>
 
           <div className="label-name">Total Calories</div>
-          <div>{ totalCal }</div>
+          <div className="label-name">{ totalCal }</div>
+
+          <div className="label-name">Weight Gain</div>
+          <div className="label-name">{ totalCal + 250 }</div>
+
+          <div className="label-name">Weight Loss</div>
+          <div className="label-name">{ adj }</div>
+
         </div>
         <div className="caloric-stats-bottom">
           <label className="label-name">Estimated Caloric Needs</label>
@@ -38,30 +41,27 @@ const CaloricNeed = ({weight, height, activity, age, conditions}) => {
 
             <div className="caloric-needs-chart low">
               <div className="input-name">Weight Loss</div>
-              <div>{ kg * 20}</div>
+              <div className="label-name">{ kg * 20}</div>
               <div className="input-name">Normal</div>
-              <div>{ kg * 25}</div>
+              <div className="label-name">{ kg * 25}</div>
               <div className="input-name">Weight Gain</div>
-              <div>{ kg * 30}</div>
+              <div className="label-name">{ kg * 30}</div>
             </div>
 
 
             <div className="caloric-needs-chart high">
               <div className="input-name">Weight Loss</div>
-              <div >{ kg * 25}</div>
+              <div className="label-name">{ kg * 25}</div>
               <div className="input-name">Normal</div>
-              <div>{ kg * 30}</div>
+              <div className="label-name">{ kg * 30}</div>
               <div className="input-name">Weight Gain</div>
-              <div>{ kg * 35}</div>
+              <div className="label-name">{ kg * 35}</div>
 
             </div>
         </div>
       </div>
     </div>
       );
-    } else {
-      return null;
-    }
 };
 
 export default CaloricNeed;

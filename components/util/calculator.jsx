@@ -15,7 +15,7 @@ export const convertKgToPounds = (kg) => {
 };
 
 export const calculateREE = (kg, height, age, activity) => {
-  return Math.round((kg * 10) + (height * 15.875) -  (5 * age) + (activity));
+  return Math.round((kg * 10) + (height * 15.875) -  (5 * age) + (parseFloat(activity)));
 };
 
 export const calculateCalories = (ree, activity) => {

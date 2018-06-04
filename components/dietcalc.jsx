@@ -16,8 +16,11 @@ class DietCalculator extends React.Component {
       weightval: "lbs",
       heightval: "inches",
       activity: "",
-      conditions: "",
-      page: "calculator",
+      conditions: "normal",
+      page: "caloric",
+      aka: 0,
+      bka: 0,
+      foot: 0,
     };
 
     this.handleSwitch = this.handleSwitch.bind(this);
@@ -148,47 +151,45 @@ class DietCalculator extends React.Component {
 
     let renderPage;
 
-    switch (this.state.page) {
-      case ("requirement") :
-        renderPage = <Requirement height={ height }
-          weight={ weight }
-          age={ this.state.age }
-          gender={ this.state.gender }
-          weightval={ this.state.weightval }
-          heightval={ this.state.heightval }
-          activity={ this.state.activity }/>;
-        break;
-      case ("trend") :
-        renderPage = <CaloricNeed height={ height }
-          weight={ weight }
-          age={ this.state.age }
-          gender={ this.state.gender }
-          weightval={ this.state.weightval }
-          heightval={ this.state.heightval }
-          activity={ this.state.activity }/>;
-        break;
-      case ("ibw") :
-        renderPage = <IBW height={ height }
-          weight={ weight }
-          age={ this.state.age }
-          gender={ this.state.gender }
-          weightval={ this.state.weightval }
-          heightval={ this.state.heightval }
-          activity={ this.state.activity }/>;
-        break;
-      default: {
-        renderPage = <CaloricNeed height={ height }
-          weight={ weight }
-          age={ this.state.age }
-          gender={ this.state.gender }
-          weightval={ this.state.weightval }
-          heightval={ this.state.heightval }
-          activity={ this.state.activity }/>;
-        break;
-
+    if (this.state.height > 0 && this.state.weight > 0 && this.state.age > 0 && this.state.activity > 0 && this.state.conditions !== "") {
+      switch (this.state.page) {
+        case ("requirement") :
+          renderPage = <Requirement height={ height }
+            weight={ weight }
+            age={ this.state.age }
+            gender={ this.state.gender }
+            weightval={ this.state.weightval }
+            heightval={ this.state.heightval }
+            activity={ this.state.activity }/>;
+          break;
+        case ("trend") :
+          renderPage = <CaloricNeed height={ height }
+            weight={ weight }
+            age={ this.state.age }
+            gender={ this.state.gender }
+            weightval={ this.state.weightval }
+            heightval={ this.state.heightval }
+            activity={ this.state.activity }/>;
+          break;
+        case ("ibw") :
+          renderPage = <IBW height={ height }
+            weight={ weight }
+            age={ this.state.age }
+            gender={ this.state.gender }
+            weightval={ this.state.weightval }
+            heightval={ this.state.heightval }
+            activity={ this.state.activity }/>;
+          break;
+        default:
+          renderPage = <CaloricNeed height={ height }
+            weight={ weight }
+            age={ this.state.age }
+            gender={ this.state.gender }
+            weightval={ this.state.weightval }
+            heightval={ this.state.heightval }
+            activity={ this.state.activity }/>;
         }
-      }
-
+      };
 
     return (
       <div className="dietapp">
@@ -200,6 +201,7 @@ class DietCalculator extends React.Component {
         </div>
         <div className="rendered">
           <div className="dietcalc">
+            <div className="dietcalc-input">
               <label className="input-name">Height</label>
               <input className="input-field" maxLength="10" type="text" name="height" value={ this.state.height }  onChange={ this.handleInput("height") } onKeyPress={ (e) => this.validKeys(e) }></input>
               <input className="change-unit" type="button" onClick={ this.handleSwitch(this.state.heightval) } value={ this.state.heightval }></input>
@@ -220,14 +222,38 @@ class DietCalculator extends React.Component {
                 <option value={ 1.2 }>Confined to Bed</option>
               </select>
               <div className="input-name">Conditions</div>
-              <select onChange={ this.handleSelect("conditions") } defaultValue="Select Option" className="dropbtn">
-                <option className="test" disabled>Select Option</option>
-                <option value={ 1 }>Normal</option>
-                <option value={ 1 }>Pressure Ulcer</option>
-                <option value={ 1.2 }>Infection</option>
-                <option value={ 1.4 }>Dialysis</option>
+              <select onChange={ this.handleSelect("conditions") } defaultValue="Normal" className="dropbtn">
+                <option value={ "normal" }>Normal</option>
+                <option value={ "pc" }>Pressure Ulcer</option>
+                <option value={ "infection" }>Infection</option>
+                <option value={ "dialysis" }>Dialysis</option>
               </select>
             </div>
+
+            <div className="input-section">
+              <label>Amputations</label>
+              <div className="inputs">
+                <label className="input-name">AKA</label>
+                <select className="dropbtn" onChange={ this.handleSelect("aka") } defaultValue="Select your option" className="dropbtn">
+                  <option value={ 0 }>0</option>
+                  <option value={ 1 }>1</option>
+                  <option value={ 2 }>2</option>
+                </select>
+                <label>BKA</label>
+                <select className="dropbtn" onChange={ this.handleSelect("bkb") } defaultValue="Select your option" className="dropbtn">
+                  <option value={ 0 }>0</option>
+                  <option value={ 1 }>1</option>
+                  <option value={ 2 }>2</option>
+                </select>
+                <label>Foot</label>
+                <select className="dropbtn" onChange={ this.handleSelect("foot") } defaultValue={ 0 } className="dropbtn">
+                  <option value={ 0 }>0</option>
+                  <option value={ 1 }>1</option>
+                  <option value={ 2 }>2</option>
+                </select>
+              </div>
+            </div>
+          </div>
         { renderPage }
         </div>
       </div>
