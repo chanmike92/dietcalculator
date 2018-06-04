@@ -33,3 +33,7 @@ export const calculateIBW = (height, gender) => {
     return (100+5*(height-60));
   }
 };
+
+export const calculateAmpWeight = (weight, foot, bka, aka) => {
+  return (weight/(1-((0.015* foot)+(0.059* bka)+(0.084* aka))));
+};

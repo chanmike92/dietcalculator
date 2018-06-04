@@ -185,7 +185,7 @@ select option:checked {
 .input-section {
   height: 100%;
   display: grid;
-  grid-template-rows: 50 auto;
+  grid-template-rows: 50px auto;
   grid-column-gap: 10px;
   grid-row-gap: 10px;
 
@@ -252,4 +252,21 @@ select option:checked {
 
 .high {
   grid-column-start: 2
+}
+
+.condition-chart {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  grid-template-rows: 50px auto;
+  grid-row-gap: 20px;
+}
+
+.condition-requirement {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  grid-template-columns: 250px auto auto;
+  grid-template-rows: repeat(3, 50px);
+  grid-column-gap: 10px;
 }

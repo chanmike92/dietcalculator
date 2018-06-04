@@ -21,11 +21,13 @@ class DietCalculator extends React.Component {
       aka: 0,
       bka: 0,
       foot: 0,
+      fever: 0,
     };
 
     this.handleSwitch = this.handleSwitch.bind(this);
     this.handleTab = this.handleTab.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+    this.handleInput = this.handleInput.bind(this);
     this.currentPage = this.currentPage.bind(this);
   }
 
@@ -156,11 +158,10 @@ class DietCalculator extends React.Component {
         case ("requirement") :
           renderPage = <Requirement height={ height }
             weight={ weight }
-            age={ this.state.age }
-            gender={ this.state.gender }
-            weightval={ this.state.weightval }
-            heightval={ this.state.heightval }
-            activity={ this.state.activity }/>;
+            fever={ this.state.fever }
+            conditions={ this.state.conditions }
+            validKeys={ this.validKeys }
+            handleInput={ this.handleInput }/>;
           break;
         case ("trend") :
           renderPage = <CaloricNeed height={ height }
@@ -228,9 +229,14 @@ class DietCalculator extends React.Component {
               <div className="input-name">Conditions</div>
               <select onChange={ this.handleSelect("conditions") } defaultValue="Normal" className="dropbtn">
                 <option value={ "normal" }>Normal</option>
-                <option value={ "pc" }>Pressure Ulcer</option>
+                <option value={ "pu" }>Pressure Ulcer</option>
                 <option value={ "infection" }>Infection</option>
                 <option value={ "dialysis" }>Dialysis</option>
+                <option value={ "mpu" }>Multiple Pressure Ulcers</option>
+                <option value={ "ckd" }>Chronic Kidney Disease</option>
+                <option value={ "uti" }>Urinary Tract Infection</option>
+                <option value={ "chf" }>Congestive Heart Failure</option>
+                <option value={ "fever" }>Fever</option>
               </select>
           </div>
         { renderPage }
@@ -241,30 +247,5 @@ class DietCalculator extends React.Component {
     );
   }
 }
-
-// <div className="input-section">
-//   <label>Amputations</label>
-//   <div className="inputs">
-//     <label className="input-name">AKA</label>
-//     <select className="dropbtn" onChange={ this.handleSelect("aka") } defaultValue="Select your option" className="dropbtn">
-//       <option value={ 0 }>0</option>
-//       <option value={ 1 }>1</option>
-//       <option value={ 2 }>2</option>
-//     </select>
-//     <label>BKA</label>
-//     <select className="dropbtn" onChange={ this.handleSelect("bkb") } defaultValue="Select your option" className="dropbtn">
-//       <option value={ 0 }>0</option>
-//       <option value={ 1 }>1</option>
-//       <option value={ 2 }>2</option>
-//     </select>
-//     <label>Foot</label>
-//     <select className="dropbtn" onChange={ this.handleSelect("foot") } defaultValue={ 0 } className="dropbtn">
-//       <option value={ 0 }>0</option>
-//       <option value={ 1 }>1</option>
-//       <option value={ 2 }>2</option>
-//     </select>
-//   </div>
-// </div>
-
 
 export default DietCalculator;
