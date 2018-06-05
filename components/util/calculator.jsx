@@ -28,9 +28,9 @@ export const calculateBMI = (height, weight) => {
 
 export const calculateIBW = (height, gender) => {
   if (gender === "Male") {
-    return (106+6*(height-60));
+    return (106+(6*(height-60)));
   } else {
-    return (100+5*(height-60));
+    return (100+(5*(height-60)));
   }
 };
 

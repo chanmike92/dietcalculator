@@ -3,6 +3,7 @@ import CaloricNeed from './caloric_need';
 import IBW from './ibw';
 import Requirement from './requirements';
 import WeightTrend from './weight_trend';
+
 import { convertInchesToCm, convertCmToInches, convertPoundsToKg, convertKgToPounds, calculateAmpWeight } from './util/calculator';
 
 class DietCalculator extends React.Component {

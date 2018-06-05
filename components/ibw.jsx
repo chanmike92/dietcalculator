@@ -12,7 +12,8 @@ class IBW extends React.Component {
     const IBWvalue = calculateIBW(this.props.height, this.props.gender);
     const lowEnd = Math.floor((IBWvalue * 0.9) * 100)/100;
     const highEnd = Math.floor((IBWvalue * 1.1) * 100)/100;
-    const IBWPercentage = Math.floor((IBWvalue / this.props.weight) * 100)/100;
+    const IBWPercentage = Math.floor((this.props.weight / IBWvalue) * 1000)/10;
+    debugger
     // this.props.weight/(1-(( 0.015* this.state.foot)+( 0.059* this.state.bka )+( 0.084* this.state.aka)))
       return (
         <div className="ibw page">
