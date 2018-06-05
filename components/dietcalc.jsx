@@ -146,7 +146,7 @@ class DietCalculator extends React.Component {
 
       switch (input) {
         case "aka":
-        if (((this.state.foot) + (this.state.bka) + (e.currentTarget.value)) <= 2) {
+        if (((this.state.foot) + (this.state.bka) + parseInt(e.currentTarget.value)) <= 2) {
           this.setState({
             [input]: parseInt(e.currentTarget.value)
           });
@@ -154,7 +154,7 @@ class DietCalculator extends React.Component {
         break;
 
         case "bka":
-        if (((this.state.foot) + (this.state.aka) + (e.currentTarget.value)) <= 2) {
+        if (((this.state.foot) + (this.state.aka) + parseInt(e.currentTarget.value)) <= 2) {
           this.setState({
             [input]: parseInt(e.currentTarget.value)
           });
@@ -162,7 +162,7 @@ class DietCalculator extends React.Component {
         break;
 
         case "foot":
-        if (((this.state.aka) + (this.state.bka) + (e.currentTarget.value)) <= 2) {
+        if (((this.state.aka) + (this.state.bka) + parseInt(e.currentTarget.value)) <= 2) {
           this.setState({
             [input]: parseInt(e.currentTarget.value)
           });
