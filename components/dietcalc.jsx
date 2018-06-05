@@ -3,7 +3,7 @@ import CaloricNeed from './caloric_need';
 import IBW from './ibw';
 import Requirement from './requirements';
 // import WeightTrend from './weight_trend';
-import { convertInchesToCm, convertCmToInches, convertPoundsToKg, convertKgToPounds } from './util/calculator';
+import { convertInchesToCm, convertCmToInches, convertPoundsToKg, convertKgToPounds, calculateAmpWeight } from './util/calculator';
 
 class DietCalculator extends React.Component {
   constructor(props) {
@@ -133,34 +133,35 @@ class DietCalculator extends React.Component {
 
     return (e) => {
       e.preventDefault();
+
       switch (input) {
         case "aka":
-        if ((this.state.foot + this.state.bka + e.currentTarget.value) <= 2) {
+        if (((this.state.foot) + (this.state.bka) + (e.currentTarget.value)) <= 2) {
           this.setState({
-            [input]: e.currentTarget.value
+            [input]: parseInt(e.currentTarget.value)
           });
         }
         break;
 
         case "bka":
-        if ((this.state.foot + this.state.aka + e.currentTarget.value) <= 2) {
+        if (((this.state.foot) + (this.state.aka) + (e.currentTarget.value)) <= 2) {
           this.setState({
-            [input]: e.currentTarget.value
+            [input]: parseInt(e.currentTarget.value)
           });
         }
         break;
 
         case "foot":
-        if ((this.state.aka + this.state.bka + e.currentTarget.value) <= 2) {
+        if (((this.state.aka) + (this.state.bka) + (e.currentTarget.value)) <= 2) {
           this.setState({
-            [input]: e.currentTarget.value
+            [input]: parseInt(e.currentTarget.value)
           });
         }
         break;
 
         default:
           this.setState({
-          [input]: e.currentTarget.value
+          [input]: parseInt(e.currentTarget.value)
         });
       }
     };
@@ -175,7 +176,7 @@ class DietCalculator extends React.Component {
 
     const height = this.state.heightval === 'inches' ?  this.state.height : convertCmToInches(this.state.height);
     const weight = this.state.weightval === 'lbs' ? this.state.weight : convertKgToPounds(this.state.weight);
-
+    const ampWeight = calculateAmpWeight(this.state.weight, this.state.foot, this.state.bka, this.state.aka);
     let renderPage;
 
     if (this.state.height > 0 && this.state.weight > 0 && this.state.age > 0 && this.state.activity > 0 && this.state.conditions !== "") {
@@ -218,9 +219,10 @@ class DietCalculator extends React.Component {
             gender={ this.state.gender }
             weightval={ this.state.weightval }
             heightval={ this.state.heightval }
-            activity={ this.state.activity }/>;
+            activity={ this.state.activity }
+            ampWeight={ ampWeight }/>;
         }
-      };
+      }
 
     return (
       <div className="dietapp">
@@ -267,8 +269,6 @@ class DietCalculator extends React.Component {
         { renderPage }
         </div>
       </div>
-
-
     );
   }
 }

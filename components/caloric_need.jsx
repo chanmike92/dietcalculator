@@ -8,31 +8,38 @@ import { convertPoundsToKg, calculateREE, calculateCalories, calculateBMI } from
 //BMI = (weight(height * height))) * 703
 
 
-const CaloricNeed = ({weight, height, activity, age, conditions, adjBMI}) => {
+const CaloricNeed = ({weight, height, activity, age, conditions, adjBMI, ampWeight}) => {
 
 
     const kg = convertPoundsToKg(weight);
-    const BMI = calculateBMI(height, weight);
+    const BMI = calculateBMI(height, (weight - ampWeight));
     const REE = calculateREE(kg, height, age, activity);
     const totalCal = calculateCalories(REE, activity);
-
+    const BMITitle = ampWeight === 0 ? "BMI" : "Adjusted BMI";
     // label it mifflin st jor  under its own section
 
     return (
       <div className="caloric">
-        <div className="caloric-stats">
-          <div className="label-name">BMI</div>
+        <div className="bmi">
+          <div className="label-name">{ BMITitle }</div>
           <div className="label-name">{ BMI }</div>
-          <div className="label-name">Total Calories</div>
-          <div className="label-name">{ totalCal } kcal</div>
-
-          <div className="label-name">Weight Gain</div>
-          <div className="label-name">{ totalCal + 250 } kcal</div>
-
-          <div className="label-name">Weight Loss</div>
-          <div className="label-name">{ totalCal - 250 } kcal</div>
-
         </div>
+
+        <div className="caloric-stats-middle">
+          <label className="label-name">Mifflin St. Jeor</label>
+          <div className="mifflin-st-jeor">
+            <div className="label-name">Total Calories</div>
+            <div className="label-name">{ totalCal } kcal</div>
+
+            <div className="label-name">Weight Gain</div>
+            <div className="label-name">{ totalCal + 250 } kcal</div>
+
+            <div className="label-name">Weight Loss</div>
+            <div className="label-name">{ totalCal - 250 } kcal</div>
+
+          </div>
+        </div>
+
         <div className="caloric-stats-bottom">
           <label className="label-name">Simplified</label>
           <div className="caloric-needs">
