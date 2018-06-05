@@ -7,11 +7,11 @@ export const convertCmToInches = (cm) => {
 };
 
 export const convertPoundsToKg = (lbs) => {
-  return (Math.round(lbs * 0.4536 * 100) / 100);
+  return (Math.round(lbs * 0.45 * 100) / 100);
 };
 
 export const convertKgToPounds = (kg) => {
-  return (Math.round(kg * 2.204 * 100) / 100);
+  return (Math.round(kg * 2.2 * 100) / 100);
 };
 
 export const calculateREE = (kg, height, age, activity) => {
@@ -23,7 +23,7 @@ export const calculateCalories = (ree, activity) => {
 };
 
 export const calculateBMI = (height, weight) => {
-  return Math.round(((weight / (height * height)) * 703) * 100) / 100;
+  return Math.round(((weight / (height * height)) * 703) * 10) / 10;
 };
 
 export const calculateIBW = (height, gender) => {

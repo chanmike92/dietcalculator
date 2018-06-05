@@ -69,11 +69,11 @@ class Requirement extends React.Component {
           <div className="label-name high">Low End</div>
           <div className="label-name">High End</div>
           <div className>Protein Requirement</div>
-          <div className="label-name">{ kg * 1.25 }</div>
-          <div className="label-name">{ kg * 1.5 }</div>
+          <div className="label-name">{ kg * 1.25 } g</div>
+          <div className="label-name">{ kg * 1.5 } g</div>
           <div className>Fluid Requirement</div>
-          <div className="label-name">{ kg * 30 }</div>
-          <div className="label-name">{ kg * 40 }</div>
+          <div className="label-name">{ kg * 30 } ml</div>
+          <div className="label-name">{ kg * 40 } ml</div>
         </div>;
         break;
       case ("mpu") :
@@ -82,15 +82,15 @@ class Requirement extends React.Component {
           <div className="label-name high">Low End</div>
           <div className="label-name">High End</div>
           <div className>Protein Requirement</div>
-          <div className="label-name">{ kg * 1.4 }</div>
-          <div className="label-name">{ kg * 1.5 }</div>
+          <div className="label-name">{ kg * 1.4 } g</div>
+          <div className="label-name">{ kg * 1.5 } g</div>
         </div>;
         break;
       case ("uti") :
         conditionName = "Urinary Tract Infection";
         renderConditions = <div className="condition-requirement">
           <div className>Fluid Requirement</div>
-          <div className="label-name">{ kg * 35 }</div>
+          <div className="label-name">{ kg * 35 } ml</div>
         </div>;
         break;
       case ("ckd") :
@@ -99,8 +99,8 @@ class Requirement extends React.Component {
           <div className="label-name high">Low End</div>
           <div className="label-name">High End</div>
           <div className>Protein Requirement</div>
-          <div className="label-name">{ kg * 0.8 }</div>
-          <div className="label-name">{ kg * 1 }</div>
+          <div className="label-name">{ kg * 0.8 } g</div>
+          <div className="label-name">{ kg * 1 } g</div>
         </div>;
         break;
       case ("chf") :
@@ -109,8 +109,8 @@ class Requirement extends React.Component {
           <div className="label-name high">Low End</div>
           <div className="label-name">High End</div>
           <div className>Fluid Requirement</div>
-          <div className="label-name">{ kg * 20 }</div>
-          <div className="label-name">{ kg * 25 }</div>
+          <div className="label-name">{ kg * 20 } ml</div>
+          <div className="label-name">{ kg * 25 } ml</div>
         </div>;
         break;
       case ("fever") :
@@ -119,8 +119,8 @@ class Requirement extends React.Component {
           <div className="label-name high">Low End</div>
           <div className="label-name">High End</div>
           <div className>Fluid Requirement</div>
-          <div className="label-name">{ Math.round((kg * 25) + (kg * 25 * 0.07 * this.props.fever) * 100)/100 }</div>
-          <div className="label-name">{ Math.round((kg * 30) + (kg * 30 * 0.07 * this.props.fever) * 100)/100 }</div>
+          <div className="label-name">{ Math.round((kg * 25) + (kg * 25 * 0.07 * this.props.fever)) } ml</div>
+          <div className="label-name">{ Math.round((kg * 30) + (kg * 30 * 0.07 * this.props.fever)) } ml</div>
           <div className="label-name">Degrees above 98.6 F</div>
           <input className="input-field" maxLength="10" type="text" name="fever" value={ this.props.fever }  onChange={ this.props.handleInput("fever") } onKeyPress={ (e) => this.props.validKeys(e) }></input>
         </div>;
@@ -131,8 +131,8 @@ class Requirement extends React.Component {
           <div className="label-name high">Low End</div>
           <div className="label-name">High End</div>
           <div>Protein Requirement</div>
-          <div>{ kg * 1.2 }</div>
-          <div>{ kg * 1.4 }</div>
+          <div>{ kg * 1.2 } g</div>
+          <div>{ kg * 1.4 } g</div>
         </div>;
         break;
       default:
@@ -140,12 +140,12 @@ class Requirement extends React.Component {
         renderConditions = <div className="condition-requirement">
           <div className="label-name high">Low End</div>
           <div className="label-name">High End</div>
-          <div className>Protein Requirement</div>
-          <div className="label-name">{ kg * 1 }</div>
-          <div className="label-name">{ kg * 1.2 }</div>
-          <div className>Fluid Requirement</div>
-          <div className="label-name">{ kg * 25 }</div>
-          <div className="label-name">{ kg * 30 }</div>
+          <div className="label-name">Protein Requirement</div>
+          <div className="label-name">{ kg * 1 } g</div>
+          <div className="label-name">{ kg * 1.2 } g</div>
+          <div className="label-name">Fluid Requirement</div>
+          <div className="label-name">{ kg * 25 } ml</div>
+          <div className="label-name">{ kg * 30 } ml</div>
         </div>;
       }
 

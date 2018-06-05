@@ -15,47 +15,48 @@ const CaloricNeed = ({weight, height, activity, age, conditions, adjBMI}) => {
     const BMI = calculateBMI(height, weight);
     const REE = calculateREE(kg, height, age, activity);
     const totalCal = calculateCalories(REE, activity);
-    let adj = adjBMI ? adjBMI : 0;
+
+    // label it mifflin st jor  under its own section
+
     return (
       <div className="caloric">
         <div className="caloric-stats">
           <div className="label-name">BMI</div>
           <div className="label-name">{ BMI }</div>
-
           <div className="label-name">Total Calories</div>
-          <div className="label-name">{ totalCal }</div>
+          <div className="label-name">{ totalCal } kcal</div>
 
           <div className="label-name">Weight Gain</div>
-          <div className="label-name">{ totalCal + 250 }</div>
+          <div className="label-name">{ totalCal + 250 } kcal</div>
 
           <div className="label-name">Weight Loss</div>
-          <div className="label-name">{ adj }</div>
+          <div className="label-name">{ totalCal - 250 } kcal</div>
 
         </div>
         <div className="caloric-stats-bottom">
-          <label className="label-name">Estimated Caloric Needs</label>
+          <label className="label-name">Simplified</label>
           <div className="caloric-needs">
 
             <div className="label-name low">Low</div>
             <div className="label-name high">High</div>
 
             <div className="caloric-needs-chart low">
-              <div className="input-name">Weight Loss</div>
-              <div className="label-name">{ kg * 20}</div>
-              <div className="input-name">Normal</div>
-              <div className="label-name">{ kg * 25}</div>
-              <div className="input-name">Weight Gain</div>
-              <div className="label-name">{ kg * 30}</div>
+              <div className="label-name">Weight Loss</div>
+              <div className="label-name">{ Math.round(kg * 20) } kcal</div>
+              <div className="label-name">Normal</div>
+              <div className="label-name">{ Math.round(kg * 25) } kcal</div>
+              <div className="label-name">Weight Gain</div>
+              <div className="label-name">{ Math.round(kg * 30)} kcal</div>
             </div>
 
 
             <div className="caloric-needs-chart high">
-              <div className="input-name">Weight Loss</div>
-              <div className="label-name">{ kg * 25}</div>
-              <div className="input-name">Normal</div>
-              <div className="label-name">{ kg * 30}</div>
-              <div className="input-name">Weight Gain</div>
-              <div className="label-name">{ kg * 35}</div>
+              <div className="label-name">Weight Loss</div>
+              <div className="label-name">{ Math.round(kg * 25)} kcal</div>
+              <div className="label-name">Normal</div>
+              <div className="label-name">{ Math.round(kg * 30)} kcal</div>
+              <div className="label-name">Weight Gain</div>
+              <div className="label-name">{ Math.round(kg * 35)} kcal</div>
 
             </div>
         </div>

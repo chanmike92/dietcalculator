@@ -34,19 +34,19 @@ class IBW extends React.Component {
             <label>Amputations</label>
             <div className="inputs">
               <label className="input-name">AKA</label>
-              <select className="dropbtn" onChange={ this.props.handleSelect("aka") } defaultValue={ this.props.aka } className="dropbtn">
+              <select className="dropbtn" onChange={ this.props.handleSelect("aka") } value={ this.props.aka } className="dropbtn">
                 <option value={ 0 }>0</option>
                 <option value={ 1 }>1</option>
                 <option value={ 2 }>2</option>
               </select>
               <label>BKA</label>
-              <select className="dropbtn" onChange={ this.props.handleSelect("bka") } defaultValue={ this.props.bka } className="dropbtn">
+              <select className="dropbtn" onChange={ this.props.handleSelect("bka") } value={ this.props.bka } className="dropbtn">
                 <option value={ 0 }>0</option>
                 <option value={ 1 }>1</option>
                 <option value={ 2 }>2</option>
               </select>
               <label>Foot</label>
-              <select className="dropbtn" onChange={ this.props.handleSelect("foot") } defaultValue={ this.props.foot } className="dropbtn">
+              <select className="dropbtn" onChange={ this.props.handleSelect("foot") } value={ this.props.foot } className="dropbtn">
                 <option value={ 0 }>0</option>
                 <option value={ 1 }>1</option>
                 <option value={ 2 }>2</option>

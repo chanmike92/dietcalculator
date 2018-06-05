@@ -31,7 +31,6 @@ class DietCalculator extends React.Component {
     this.currentPage = this.currentPage.bind(this);
   }
 
-
   validKeys(e) {
     const valid = {1: true, 2: true, 3: true, 4: true, 5: true,
       6: true, 7: true, 8: true, 9: true, 0: true, ".": true};
@@ -134,12 +133,38 @@ class DietCalculator extends React.Component {
 
     return (e) => {
       e.preventDefault();
-      this.setState({
-        [input]: e.currentTarget.value
-      });
-    };
-  }caloric_need
+      switch (input) {
+        case "aka":
+        if ((this.state.foot + this.state.bka + e.currentTarget.value) <= 2) {
+          this.setState({
+            [input]: e.currentTarget.value
+          });
+        }
+        break;
 
+        case "bka":
+        if ((this.state.foot + this.state.aka + e.currentTarget.value) <= 2) {
+          this.setState({
+            [input]: e.currentTarget.value
+          });
+        }
+        break;
+
+        case "foot":
+        if ((this.state.aka + this.state.bka + e.currentTarget.value) <= 2) {
+          this.setState({
+            [input]: e.currentTarget.value
+          });
+        }
+        break;
+
+        default:
+          this.setState({
+          [input]: e.currentTarget.value
+        });
+      }
+    };
+  }
 
   currentPage(input) {
     return this.state.page === `${input}` ? "navbar-button selected" : "navbar-button";
