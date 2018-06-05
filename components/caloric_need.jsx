@@ -12,12 +12,11 @@ const CaloricNeed = ({weight, height, activity, age, conditions, adjBMI, ampWeig
 
 
     const kg = convertPoundsToKg(weight);
-    const BMI = calculateBMI(height, (weight - ampWeight));
+    const BMI = calculateBMI(height, (ampWeight));
     const REE = calculateREE(kg, height, age, activity);
     const totalCal = calculateCalories(REE, activity);
-    const BMITitle = ampWeight === 0 ? "BMI" : "Adjusted BMI";
+    const BMITitle = ampWeight === weight ? "BMI" : "Adjusted BMI";
     // label it mifflin st jor  under its own section
-
     return (
       <div className="caloric">
         <div className="bmi">

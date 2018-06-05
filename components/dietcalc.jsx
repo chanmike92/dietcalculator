@@ -2,7 +2,7 @@ import React from 'react';
 import CaloricNeed from './caloric_need';
 import IBW from './ibw';
 import Requirement from './requirements';
-// import WeightTrend from './weight_trend';
+import WeightTrend from './weight_trend';
 import { convertInchesToCm, convertCmToInches, convertPoundsToKg, convertKgToPounds, calculateAmpWeight } from './util/calculator';
 
 class DietCalculator extends React.Component {
@@ -31,16 +31,21 @@ class DietCalculator extends React.Component {
     this.currentPage = this.currentPage.bind(this);
   }
 
+  // validates keys pressed by keyboard; only positive numerical
+  // numbers and period for decimal
+
   validKeys(e) {
     const valid = {1: true, 2: true, 3: true, 4: true, 5: true,
       6: true, 7: true, 8: true, 9: true, 0: true, ".": true};
-      // debugger
     if (valid[e.key]) {
     } else {
       e.preventDefault();
     }
   }
 
+  // reset field to empty rather than 0 when removing imput
+  // converts string inputs into floats rounded to the neared numbers
+  // validates number input
   handleInput(input) {
     return (e) => {
       if (e.currentTarget.value === "") {
@@ -49,7 +54,6 @@ class DietCalculator extends React.Component {
           [input]: ""
         });
       } else {
-      // if (this.validKeys(e.keyCode)) {
       const inputVal = parseFloat(e.currentTarget.value) ? Math.round(parseFloat(e.currentTarget.value).toFixed(2) * 100) / 100 : e.currentTarget.value;
       switch (input) {
         case "age":
@@ -60,7 +64,7 @@ class DietCalculator extends React.Component {
         }
         break;
         default:
-        if (inputVal === "." || inputVal < 600) {
+        if (inputVal === "." || inputVal < 1000) {
           this.setState({
             [input]: inputVal
             });
@@ -69,6 +73,8 @@ class DietCalculator extends React.Component {
         }
       };
     }
+
+  // auto converts different measurement values to their metric counterparts
 
   handleSwitch(input) {
     return (e) => {
@@ -118,6 +124,7 @@ class DietCalculator extends React.Component {
     };
   }
 
+  // only allows selection of tabs when provided sufficient intial input
   handleTab(input) {
     return (e) => {
       if (this.state.height > 0 && this.state.weight > 0 && this.state.age > 0 && this.state.activity > 0 && this.state.conditions !== "") {
@@ -128,6 +135,8 @@ class DietCalculator extends React.Component {
     };
   }
 
+
+  // passed down to the IBW component to select number of amputation parts
 
   handleSelect(input) {
 
@@ -167,6 +176,8 @@ class DietCalculator extends React.Component {
     };
   }
 
+  // assigns current page to be highlighted on tab
+
   currentPage(input) {
     return this.state.page === `${input}` ? "navbar-button selected" : "navbar-button";
   }
@@ -190,7 +201,7 @@ class DietCalculator extends React.Component {
             handleInput={ this.handleInput }/>;
           break;
         case ("trend") :
-          renderPage = <CaloricNeed height={ height }
+          renderPage = <WeightTrend height={ height }
             weight={ weight }
             age={ this.state.age }
             gender={ this.state.gender }
