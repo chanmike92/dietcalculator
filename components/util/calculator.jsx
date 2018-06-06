@@ -3,11 +3,11 @@ export const convertInchesToCm = (inches) => {
 };
 
 export const convertCmToInches = (cm) => {
-  return (Math.round(cm * 0.3937 * 100) / 100);
+  return (Math.round(cm / 2.54 * 100) / 100);
 };
 
 export const convertPoundsToKg = (lbs) => {
-  return (Math.round(lbs * 0.45 * 100) / 100);
+  return (Math.round(lbs / 2.2 * 100) / 100);
 };
 
 export const convertKgToPounds = (kg) => {

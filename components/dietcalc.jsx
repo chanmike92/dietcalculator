@@ -23,6 +23,7 @@ class DietCalculator extends React.Component {
       bka: 0,
       foot: 0,
       fever: 0,
+      errors: "",
     };
 
     this.handleSwitch = this.handleSwitch.bind(this);
@@ -30,6 +31,7 @@ class DietCalculator extends React.Component {
     this.handleSelect = this.handleSelect.bind(this);
     this.handleInput = this.handleInput.bind(this);
     this.currentPage = this.currentPage.bind(this);
+    this.clearErrors = this.clearErrors.bind(this);
   }
 
   // validates keys pressed by keyboard; only positive numerical
@@ -130,7 +132,12 @@ class DietCalculator extends React.Component {
     return (e) => {
       if (this.state.height > 0 && this.state.weight > 0 && this.state.age > 0 && this.state.activity > 0 && this.state.conditions !== "") {
         this.setState({
-          page: input
+          page: input,
+          errors: "",
+        });
+      } else {
+        this.setState({
+          errors: "Please fill out all inputs first!"
         });
       }
     };
@@ -183,6 +190,10 @@ class DietCalculator extends React.Component {
     return this.state.page === `${input}` ? "navbar-button selected" : "navbar-button";
   }
 
+  clearErrors() {
+    this.setState({errors: ""});
+  }
+
 
   render() {
 
@@ -192,6 +203,10 @@ class DietCalculator extends React.Component {
     let renderPage;
 
     if (this.state.height > 0 && this.state.weight > 0 && this.state.age > 0 && this.state.activity > 0 && this.state.conditions !== "") {
+      if (this.state.errors) {
+        this.clearErrors();
+      }
+
       switch (this.state.page) {
         case ("requirement") :
           renderPage = <Requirement height={ height }
@@ -245,40 +260,43 @@ class DietCalculator extends React.Component {
           <button className={ this.currentPage("ibw") } onClick={ this.handleTab("ibw") }>IBW</button>
         </div>
         <div className="rendered">
-          <div className="dietcalc">
-              <label className="input-name">Height</label>
-              <input className="input-field" maxLength="10" type="text" name="height" value={ this.state.height }  onChange={ this.handleInput("height") } onKeyPress={ (e) => this.validKeys(e) }></input>
-              <input className="change-unit" type="button" onClick={ this.handleSwitch(this.state.heightval) } value={ this.state.heightval }></input>
-              <label className="input-name">Weight</label>
-              <input className="input-field" maxLength="10" type="text" name="weight" value={ this.state.weight }  onChange={ this.handleInput("weight") } onKeyPress={ (e) => this.validKeys(e) }></input>
-              <input className="change-unit" type="button" onClick={ this.handleSwitch(this.state.weightval) } value={ this.state.weightval }></input>
-              <label className="input-name">Age</label>
-              <input className="input-field" maxLength="3" type="text" name="age" value={ this.state.age }  onChange={ this.handleInput("age")} onKeyPress={ (e) => this.validKeys(e) }></input>
-              <label className="static-unit">years</label>
+          <div>
+            <div>{ this.state.errors }</div>
+            <div className="dietcalc">
+                <label className="input-name">Height</label>
+                <input className="input-field" maxLength="10" type="text" name="height" value={ this.state.height }  onChange={ this.handleInput("height") } onKeyPress={ (e) => this.validKeys(e) }></input>
+                <input className="change-unit" type="button" onClick={ this.handleSwitch(this.state.heightval) } value={ this.state.heightval }></input>
+                <label className="input-name">Weight</label>
+                <input className="input-field" maxLength="10" type="text" name="weight" value={ this.state.weight }  onChange={ this.handleInput("weight") } onKeyPress={ (e) => this.validKeys(e) }></input>
+                <input className="change-unit" type="button" onClick={ this.handleSwitch(this.state.weightval) } value={ this.state.weightval }></input>
+                <label className="input-name">Age</label>
+                <input className="input-field" maxLength="3" type="text" name="age" value={ this.state.age }  onChange={ this.handleInput("age")} onKeyPress={ (e) => this.validKeys(e) }></input>
+                <label className="static-unit">years</label>
 
-              <label className="input-name">Gender</label>
-              <input className="change-unit" type="button" onClick={ this.handleSwitch(this.state.gender) } value={ this.state.gender }></input>
-              <div className="input-name">Activity</div>
-              <select onChange={ this.handleSelect("activity") } defaultValue="Select Option" className="dropbtn">
-                <option disabled>Select Option</option>
-                <option value={ 1.4 }>Light Activity</option>
-                <option value={ 1.3 }>Ambulatory/Out of Bed</option>
-                <option value={ 1.2 }>Confined to Bed</option>
-              </select>
-              <div className="input-name">Conditions</div>
-              <select onChange={ this.handleSelect("conditions") } defaultValue="Normal" className="dropbtn">
-                <option value={ "normal" }>Normal</option>
-                <option value={ "pu" }>Pressure Ulcer</option>
-                <option value={ "infection" }>Infection</option>
-                <option value={ "dialysis" }>Dialysis</option>
-                <option value={ "mpu" }>Multiple Pressure Ulcers</option>
-                <option value={ "ckd" }>Chronic Kidney Disease</option>
-                <option value={ "uti" }>Urinary Tract Infection</option>
-                <option value={ "chf" }>Congestive Heart Failure</option>
-                <option value={ "fever" }>Fever</option>
-              </select>
-          </div>
-        { renderPage }
+                <label className="input-name">Gender</label>
+                <input className="change-unit" type="button" onClick={ this.handleSwitch(this.state.gender) } value={ this.state.gender }></input>
+                <div className="input-name">Activity</div>
+                <select onChange={ this.handleSelect("activity") } defaultValue="Select Option" className="dropbtn">
+                  <option disabled>Select Option</option>
+                  <option value={ 1.4 }>Light Activity</option>
+                  <option value={ 1.3 }>Ambulatory/Out of Bed</option>
+                  <option value={ 1.2 }>Confined to Bed</option>
+                </select>
+                <div className="input-name">Conditions</div>
+                <select onChange={ this.handleSelect("conditions") } defaultValue="Normal" className="dropbtn">
+                  <option value={ "normal" }>Normal</option>
+                  <option value={ "pu" }>Pressure Ulcer</option>
+                  <option value={ "infection" }>Infection</option>
+                  <option value={ "dialysis" }>Dialysis</option>
+                  <option value={ "mpu" }>Multiple Pressure Ulcers</option>
+                  <option value={ "ckd" }>Chronic Kidney Disease</option>
+                  <option value={ "uti" }>Urinary Tract Infection</option>
+                  <option value={ "chf" }>Congestive Heart Failure</option>
+                  <option value={ "fever" }>Fever</option>
+                </select>
+              </div>
+            </div>
+          { renderPage }
         </div>
       </div>
     );
