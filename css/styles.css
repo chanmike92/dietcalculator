@@ -109,6 +109,10 @@ select option:checked {
   display:block;
 }
 
+.error {
+  height: 30px;
+  margin-bottom: 20px;
+}
 
 .navbar {
   height: 50px;

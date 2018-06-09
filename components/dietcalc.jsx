@@ -204,9 +204,8 @@ class DietCalculator extends React.Component {
 
     if (this.state.height > 0 && this.state.weight > 0 && this.state.age > 0 && this.state.activity > 0 && this.state.conditions !== "") {
       if (this.state.errors) {
-        this.clearErrors();
+        setTimeout(this.clearErrors(), 0);
       }
-
       switch (this.state.page) {
         case ("requirement") :
           renderPage = <Requirement height={ height }
@@ -261,7 +260,7 @@ class DietCalculator extends React.Component {
         </div>
         <div className="rendered">
           <div>
-            <div>{ this.state.errors }</div>
+            <div className="error">{ this.state.errors }</div>
             <div className="dietcalc">
                 <label className="input-name">Height</label>
                 <input className="input-field" maxLength="10" type="text" name="height" value={ this.state.height }  onChange={ this.handleInput("height") } onKeyPress={ (e) => this.validKeys(e) }></input>

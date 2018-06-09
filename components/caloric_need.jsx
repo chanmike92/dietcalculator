@@ -1,13 +1,6 @@
 import React from 'react';
 import { convertPoundsToKg, calculateREE, calculateCalories, calculateBMI } from './util/calculator';
 
-//1 inch = 2.54 cm   || 1 cm = 0.3937 in
-//1 kg = 2.204 lbs || 1 lb = 0.4536 kg
-
-
-//BMI = (weight(height * height))) * 703
-
-
 const CaloricNeed = ({weight, height, activity, age, conditions, adjBMI, ampWeight}) => {
 
 
