@@ -250,12 +250,15 @@ class DietCalculator extends React.Component {
         }
       }
 
+      // input this later
+      // <button className={ this.currentPage("trend") } onClick={ this.handleTab("trend") }>Weight Trend</button>
+
+
     return (
       <div className="dietapp">
         <div className="navbar">
           <button className={ this.currentPage("caloric") } onClick={ this.handleTab("caloric") }>Estimated Caloric Needs</button>
           <button className={ this.currentPage("requirement") } onClick={ this.handleTab("requirement") }>Protein/Fluid Requirements</button>
-          <button className={ this.currentPage("trend") } onClick={ this.handleTab("trend") }>Weight Trend</button>
           <button className={ this.currentPage("ibw") } onClick={ this.handleTab("ibw") }>IBW</button>
         </div>
         <div className="rendered">
